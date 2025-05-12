@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>APOD - Astronomy Picture of the Day</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #90caf9;
+            text-align: center;
+        }
+
+        table {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #1e1e1e;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2c2c2c;
+            color: #90caf9;
+        }
+
+        td a {
+            color: #64b5f6;
+            text-decoration: none;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            display: block;
+            max-width: 90%;
+            height: auto;
+            margin: 30px auto;
+            border-radius: 8px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+        }
+
+        .error {
+            color: #ef5350;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Imagem do Dia da NASA</h1>
+<div th:if="${apod}">
+    <table>
+        <tr>
+            <th>Data</th>
+            <td th:text="${apod.date}"></td>
+        </tr>
+        <tr>
+            <th>Título</th>
+            <td th:text="${apod.title}"></td>
+        </tr>
+        <tr>
+            <th>Explicação</th>
+            <td th:text="${apod.explanation}"></td>
+        </tr>
+        <tr>
+            <th>URL da Imagem</th>
+            <td><a th:href="${apod.url}" th:text="${apod.url}" target="_blank"></a></td>
+        </tr>
+        <tr th:if="${apod.hdurl}">
+            <th>URL em Alta Resolução</th>
+            <td><a th:href="${apod.hdurl}" th:text="${apod.hdurl}" target="_blank"></a></td>
+        </tr>
+        <tr>
+            <th>Tipo de Mídia</th>
+            <td th:text="${apod.media_type}"></td>
+        </tr>
+        <tr th:if="${apod.copyright}">
+            <th>Copyright</th>
+            <td th:text="${apod.copyright}"></td>
+        </tr>
+    </table>
+    <div th:if="${apod.url}">
+        <img th:src="${apod.url}" alt="APOD Image"/>
+    </div>
+</div>
+<div th:unless="${apod}" class="error" th:text="'Não foi possível carregar os dados da APOD.'"></div>
+</body>
+</html>
